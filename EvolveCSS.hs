@@ -5,6 +5,7 @@ import Text.Parsec.String
 type Selector = String
 data Rule = Rule String String deriving Show
 data Ruleset = Ruleset Selector [Rule] deriving Show
+type Stylesheet = [Ruleset]
 
 paddedChar c = char c <* spaces
 
@@ -29,4 +30,7 @@ ruleToStr :: Rule -> String
 ruleToStr (Rule p v) = p ++ ": " ++ v ++ ";\n"
 
 rulesetToStr :: Ruleset -> String
-rulesetToStr (Ruleset s rs) = s ++ " {\n" ++ (concatMap ruleToStr rs) ++ "}\n"
+rulesetToStr (Ruleset s rs) = s ++ " {\n" ++ (concatMap ruleToStr rs) ++ "}\n\n"
+
+stylesheetToStr :: Stylesheet -> String
+stylesheetToStr = concatMap rulesetToStr
