@@ -15,9 +15,12 @@ rule = do
 
   return $ Rule p v
 
+selector :: Parser String
+selector = many1 (oneOf ".#" <|> letter <|> digit) <* spaces
+
 ruleset :: Parser Ruleset
 ruleset = do
-    s <- many1 (noneOf "{")
+    s <- selector `sepBy1` spaces
     r <- paddedChar '{' *> many1 rule <* paddedChar '}'
 
-    return $ Ruleset s r
+    return $ Ruleset (unwords s) r
