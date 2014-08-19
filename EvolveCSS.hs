@@ -24,3 +24,9 @@ ruleset = do
     r <- paddedChar '{' *> many1 rule <* paddedChar '}'
 
     return $ Ruleset (unwords s) r
+
+ruleToStr :: Rule -> String
+ruleToStr (Rule p v) = p ++ ": " ++ v ++ ";\n"
+
+rulesetToStr :: Ruleset -> String
+rulesetToStr (Ruleset s rs) = s ++ " {\n" ++ (concatMap ruleToStr rs) ++ "}\n"
