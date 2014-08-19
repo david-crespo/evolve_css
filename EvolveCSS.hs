@@ -15,3 +15,15 @@ rule = do
     char ';'
 
     return $ Rule p v
+
+ruleset :: Parser Ruleset
+ruleset = do
+    s <- many1 (noneOf "{")
+    char '{'
+    spaces
+
+    r <- many1 rule
+    char '}'
+    spaces
+
+    return $ Ruleset s r
