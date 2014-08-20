@@ -5,7 +5,7 @@ Given a comp (a mockup) and some HTML that matches the structure of the mockup, 
 
 ## Ingredients
 
-I'm using [phantomjs](http://phantomjs.org/) to render the HTML/CSS and take a screenshot, and [ImageMagick] to diff the screenshot and the comp.
+I'm using [phantomjs](http://phantomjs.org/) to render the HTML/CSS and take a screenshot, and [ImageMagick](http://www.imagemagick.org/) to diff the screenshot and the comp.
 
 But the real meat of the project is the Haskell code that produces new generations of CSS files.
 
@@ -22,14 +22,28 @@ data Ruleset = Ruleset Selector [Rule] deriving Show
 type Stylesheet = [Ruleset]
 ```
 
-In other words, a `Selector` is a string, like `".box > p"` . A `Rule` is a pair of strings, like `"color"` and `"green"`. A `ruleset` is a `Selector` and a list of `Rule`s.
-
+In other words, a `Selector` is a string, like `".box > p"` . A `Rule` is a pair of strings, like `"color"` and `"green"`. A `Ruleset` is a `Selector` and a list of `Rule`. Finally, a `Stylesheet` is a list of `Ruleset`.[1]
 
 Using the above definitions, it may be easier than it first appeared to characterize mutations that preserve CSS validity. 
 
-### Mutations
+### Validity-preserving mutation
 
+Mutations could be any of the following:
 
+* Add or remove a ruleset (possibly require it to be empty)
+* Modify a selector (this might be the hardest one)
+  * Add, remove, or modify elements, e.g., transform `div` to `div li`
+* Add or remove a rule
+* Modify a rule, which entails changing either the value or the property (making sure to maintain compatibility between the property and the value)
+
+### Tentative characterization of reproduction
+
+Based on the considerations for mutation, some ideas for possible components of reproduction follow naturally. Given parents X and Y:
+
+* Taking some combination of the rulesets from X and Y (keeping it simple is probably best to start with)
+* Taking a random rule from X and putting it in a random ruleset from Y
+* If X and Y have rules with the same property, take the value from Y and put in the ruleset where X had it
+* etc.
 
 ## Fitness
 
@@ -40,3 +54,6 @@ The fitness of a given individual stylesheet will be based on
   * Number of selectors
   * Number of rules
   * Length of string representation
+
+
+[1] For these definitions I am indebted to Jakub Arnold's excellent blog post, [Parsing CSS with Parsec](http://blog.jakubarnold.cz/2014/08/10/parsing-css-with-parsec.html).
