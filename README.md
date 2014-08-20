@@ -22,7 +22,16 @@ data Ruleset = Ruleset Selector [Rule] deriving Show
 type Stylesheet = [Ruleset]
 ```
 
-In other words, a `Selector` is a string, like `".box > p"` . A `Rule` is a pair of strings, like `"color"` and `"green"`. A `Ruleset` is a `Selector` and a list of `Rule`. Finally, a `Stylesheet` is a list of `Ruleset`. [1]
+In other words, a `Selector` is a string, like `".box > p"` . A `Rule` is a pair of strings, like `"color"` and `"green"`. A `Ruleset` is a `Selector` and a list of `Rule`, such as:
+
+```css
+.box p {
+    background-color: green;
+    margin-left: 20px;
+}
+```
+
+Finally, a `Stylesheet` is a list of `Ruleset`. [1]
 
 Using the above definitions, it may be easier than it first appeared to characterize mutations that preserve CSS validity. 
 
