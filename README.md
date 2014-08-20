@@ -9,7 +9,7 @@ I'm using [phantomjs](http://phantomjs.org/) to render the HTML/CSS and take a s
 
 But the real meat of the project is the Haskell code that produces new generations of CSS files.
 
-## The hard part: mutation and reproduction
+## The hard part: validity-preserving mutation and reproduction
 
 The problem is how to sexually combine stylesheets and introduce random mutations in such a way that the resulting CSS is still valid.
 
@@ -26,7 +26,7 @@ In other words, a `Selector` is a string, like `".box > p"` . A `Rule` is a pair
 
 Using the above definitions, it may be easier than it first appeared to characterize mutations that preserve CSS validity. 
 
-### Validity-preserving mutation
+### Mutation
 
 Mutations could be any of the following:
 
@@ -36,7 +36,7 @@ Mutations could be any of the following:
 * Add or remove a rule
 * Modify a rule, which entails changing either the value or the property (making sure to maintain compatibility between the property and the value)
 
-### Tentative characterization of reproduction
+### Reproduction
 
 Based on the considerations for mutation, some ideas for possible components of reproduction follow naturally. Given parents X and Y:
 
