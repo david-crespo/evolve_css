@@ -11,13 +11,13 @@ paddedChar c = char c <* spaces
 
 rule :: Parser Rule
 rule = do
-  p <- many1 letter <* paddedChar ':'
+  p <- many1 (oneOf "-" <|> letter) <* paddedChar ':'
   v <- many1 (noneOf ";") <* paddedChar ';'
 
   return $ Rule p v
 
 selector :: Parser String
-selector = many1 (oneOf ".#" <|> letter <|> digit) <* spaces
+selector = many1 (oneOf ".#-_*>" <|> alphaNum) <* spaces
 
 ruleset :: Parser Ruleset
 ruleset = do
