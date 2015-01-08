@@ -26,6 +26,17 @@ def get_possible_selectors(file_name):
 
     return Selectors(all_tags, all_classes, all_ids)
 
+def selectors_to_file(selectors, file_name):
+    with open(file_name, 'w') as f:
+        for t in selectors.tags:
+            f.write(t + '\n')
+
+        for c in selectors.classes:
+            f.write('.' + c + '\n')
+
+        for i in selectors.ids:
+            f.write('#' + i + '\n')
 
 if __name__ == "__main__":
-    print get_possible_selectors('index.html')
+    selectors = get_possible_selectors('index.html')
+    selectors_to_file(selectors, 'selectors.txt')
