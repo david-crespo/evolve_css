@@ -1,3 +1,5 @@
+Note: very little of what is described here is actually done
+
 evolve_css
 ==========
 
