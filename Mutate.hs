@@ -15,16 +15,19 @@ combine s1 s2 = firstHalf s1 ++ secondHalf s2 where
 
 -- MUTATORS
 
-addRuleset :: Stylesheet -> [Selector] -> Int -> Stylesheet
-addRuleset s sels r = s ++ [newRuleset] where
+addRule :: Stylesheet -> [Selector] -> Int -> Stylesheet
+addRule s sels r = s ++ [newRule] where
     newSelector = eltForSeed sels r
-    newRuleset = Ruleset newSelector []
+    newRule = Rule newSelector "margin" (Pixel 10)
 
 
 -- GENERATORS
 
 generateSelector :: [Selector] -> Int -> Selector
 generateSelector = eltForSeed
+
+-- generateMargin :: Int -> Rule
+-- generateMargin r = Rule "margin"
 
 -- we will want to be able to generate more complex selectors, but this is a start
 

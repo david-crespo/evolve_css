@@ -1,6 +1,13 @@
 module Stylesheet where
 
+
+data SimpleSize = Pixel Int | Percentage Int deriving (Show)
+data CompositeSize = CompositeSize SimpleSize SimpleSize SimpleSize SimpleSize deriving (Show)
+
 type Selector = String
-data Rule = Rule String String deriving Show
-data Ruleset = Ruleset Selector [Rule] deriving Show
-type Stylesheet = [Ruleset]
+type PropName = String
+
+data PropValue = SimpleSize | CompositeSize
+
+data Rule = Rule Selector PropName PropValue deriving (Show)
+type Stylesheet = [Rule]
